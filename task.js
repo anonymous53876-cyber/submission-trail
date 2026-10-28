@@ -1,3 +1,4 @@
+<script src="tasks.js"></script>
 const taskDatabase = [
     {
         category: "Household & Servitude",
