@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission's Trial | Obedience Generator</title>
+    <style>
+        :root {
+            --bg-color: #080808;
+            --card-bg: #121212;
+            --accent: #8b0000;
+            --accent-hover: #a50000;
+            --text-main: #e0e0e0;
+            --text-muted: #888;
+            --border: #222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-generate {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s ease, transform 0.1s ease;
+            width: 100%;
+        }
+
+        .btn-generate:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-generate:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid var(--accent);
+            padding: 30px;
+            max-width: 550px;
+            width: 100%;
+            text-align: left;
+            position: relative;
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
+        }
+
+        .category-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .task-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .task-instructions {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .task-meta {
+            border-top: 1px solid #222;
+            padding-top: 15px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-close, .btn-done {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-close {
+            background: transparent;
+            border: 1px solid #44,44,44;
+            color: #aaa;
+        }
+
+        .btn-close:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        .btn-done {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-done:hover {
+            background: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Submission's Trial</h1>
+        <p class="subtitle">Obedience is mandatory. Surrender your dignity.</p>
+        <button class="btn-generate" onclick="drawTask()">Draw Your Fate</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <span class="category-tag" id="modalCategory">Category</span>
+            <h2 class="task-title" id="modalTitle">Task Title</h2>
+            <div class="task-instructions" id="modalInstructions">Instructions go here...</div>
+            <div class="task-meta">
+                <span id="modalStems">Sets/Reps: 3</span>
+                <span id="modalTime">Time: 5 mins</span>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-close" onclick="closeModal()">Refuse (Failure)</button>
+                <button class="btn-done" onclick="closeModal()">Completed, Mistress</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample database structure (To scale to 2000 tasks, this array can be imported from an external JSON file or generated via script)
+        const taskDatabase = [
+            {
+                category: "Household & Servitude",
+                title: "Naked Floor Scrubbing",
+                instructions: "Strip completely naked immediately. Grab a wet cloth and cleaner. You must scrub every inch of the kitchen floor while remaining strictly on your hands and knees (doggy style positioning). If your knees or chest touch the floor improperly, restart the timer.",
+                setsReps: "1 Continuous Session",
+                time: "15 Minutes"
+            },
+            {
+                category: "Physical Endurance & Conditioning",
+                title: "Punishment Uthak Baithak (Deep Squats)",
+                instructions: "Stand in the center of your empty room completely bare. Place your hands behind your head, fingers locked. Perform slow, agonizingly deep uthak baithak (squats). At the bottom of each squat, hold the lowest position for 3 full seconds while reciting aloud: 'I exist only to serve my superiors.'",
+                setsReps: "4 Sets x 20 Reps",
+                time: "10 Minutes"
+            },
+            {
+                category: "Humiliation & Crossdressing",
+                title: "Forced Feminization Wardrobe Trial",
+                    instructions: "Open your wardrobe or drawers. Find the most feminine, revealing, or silky item available (panties, stockings, or a dress). Put it on fully while standing in front of your full-length mirror. Stare directly into your own eyes without looking away, acknowledging your submissive place.",
+                setsReps: "1 Strict Trial",
+                time: "20 Minutes"
+            },
+            {
+                category: "Pet Play & Degradation",
+                title: "Caged Wall Sit of Shame",
+                instructions: "Find a blank wall in your room. Slide down until your thighs are perfectly parallel to the floor (90-degree angle). Raise your hands above your head like paws, keeping your head tilted back against the wall. Whimper softly every 30 seconds to remind yourself of your status.",
+                setsReps: "3 Sets",
+                time: "3 Minutes per set"
+            },
+            {
+                category: "BDSM & Posture Control",
+                title: "The Ultimate Architectural Slouch",
+                instructions: "Kneel on the hard floor facing a corner of your room, nose exactly 6 inches away from the junction of the walls. Place your hands flat behind your lower back, palms facing outward. Maintain absolute stillness. Any twitching or shifting adds 5 minutes to your sentence.",
+                setsReps: "Single Hold",
+                time: "15 Minutes"
+            }
+        ];
+
+        function drawTask() {
+            // Select a random task from the database
+            const randomIndex = Math.floor(Math.random() * taskDatabase.length);
+            const task = taskDatabase[randomIndex];
+
+            // Populate the modal fields
+            document.getElementById('modalCategory').innerText = task.category;
+            document.getElementById('modalTitle').innerText = task.title;
+            document.getElementById('modalInstructions').innerText = task.instructions;
+            document.getElementById('modalStems').innerText = `Requirement: ${task.setsReps}`;
+            document.getElementById('modalTime').innerText = `Duration: ${task.time}`;
+
+            // Show modal
+            document.getElementById('taskModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('taskModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside content
+        window.onclick = function(event) {
+            const modal = document.getElementById('taskModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
