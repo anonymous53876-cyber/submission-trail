@@ -205,28 +205,130 @@
         </div>
     </div>
 
-    <!-- Link to the external tasks file -->
-    <script src="tasks.js"></script>
-
     <script>
+        const taskDatabase = [
+            {
+                category: "Household & Servitude",
+                title: "Naked Floor Scrubbing",
+                instructions: "Strip completely naked immediately. Grab a wet cloth and cleaner. You must scrub every inch of the floor while remaining strictly on your hands and knees. If your knees touch improperly, restart the timer.",
+                setsReps: "1 Continuous Session",
+                time: "15 Minutes"
+            },
+            {
+                category: "Physical Endurance",
+                title: "Punishment Uthak Baithak (Deep Squats)",
+                instructions: "Stand completely bare in the center of your room. Place your hands behind your head. Perform slow, agonizingly deep uthak baithak. At the bottom of each squat, hold for 3 seconds while whispering: 'I exist only to serve.'",
+                setsReps: "4 Sets x 20 Reps",
+                time: "10 Minutes"
+            },
+            {
+                category: "Humiliation & Crossdressing",
+                title: "Forced Feminization Mirror Stare",
+                instructions: "Find a feminine clothing item or undergarment and put it on. Stand in front of your full-length mirror. Stare directly into your own eyes without breaking contact, accepting your submissive role.",
+                setsReps: "1 Strict Trial",
+                time: "20 Minutes"
+            },
+            {
+                category: "Pet Play & Posture",
+                title: "Caged Wall Sit of Shame",
+                instructions: "Find a blank wall. Slide down until your thighs are parallel to the floor (90 degrees). Raise your hands above your head like paws, keeping your head tilted back. Whimper softly every 30 seconds.",
+                setsReps: "3 Sets",
+                time: "3 Minutes per set"
+            },
+            {
+                category: "BDSM & Posture Control",
+                title: "Corner Nose Slouch",
+                instructions: "Kneel on the hard floor facing a corner of your room, nose exactly 6 inches away from the wall junction. Place your hands flat behind your lower back, palms facing outward. Maintain absolute stillness.",
+                setsReps: "Single Hold",
+                time: "15 Minutes"
+            },
+            {
+                category: "Physical Endurance",
+                title: "Agony Push-Up Pauses",
+                instructions: "Drop to the floor naked. Begin standard push-ups, but at the lowest point (chest hovering an inch above the ground), freeze completely for 10 full seconds before pushing back up.",
+                setsReps: "3 Sets x 10 Reps",
+                time: "12 Minutes"
+            },
+            {
+                category: "Household & Servitude",
+                title: "The Crawling Dust Sweep",
+                instructions: "You are forbidden from standing or walking. You must crawl on all fours to every corner of your room, wiping dust away using only a small rag held in one hand.",
+                setsReps: "2 Full Room Circuits",
+                time: "20 Minutes"
+            },
+            {
+                category: "Pet Play & Degradation",
+                title: "Puppy Bowl Obedience",
+                instructions: "Get down on all fours on the floor. Place a small bowl of water on the ground ahead of you. Without using your hands, lean down and lap the water using only your tongue.",
+                setsReps: "5 Laps",
+                time: "5 Minutes"
+            },
+            {
+                category: "Humiliation & Exposure",
+                title: "Window Vulnerability Stance",
+                instructions: "Stand completely naked directly in front of your room's window with the blinds open just enough to feel exposed. Strike a rigid, submissive pose and hold it without blinking.",
+                setsReps: "1 Continuous Hold",
+                time: "10 Minutes"
+            },
+            {
+                category: "BDSM & Flexibility",
+                title: "Bound Wrist Statue",
+                instructions: "Clasp your hands tightly behind your lower back as if bound by invisible ropes. Kneel upright on the floor with your toes pointed backward. Do not slouch or adjust your posture.",
+                setsReps: "3 Sets",
+                time: "5 Minutes per set"
+            },
+            {
+                category: "Mind Control & Obedience",
+                title: "Silent Servant Meditation",
+                instructions: "Sit cross-legged on the bare floor with your palms facing upward on your knees. Close your eyes and repeat mentally: 'My mind is blank, my body is hers.' Do not move a muscle.",
+                setsReps: "1 Meditation Block",
+                time: "10 Minutes"
+            },
+            {
+                category: "Physical Endurance",
+                title: "Exhaustion Plank of Penitence",
+                instructions: "Drop into a low forearm plank position. Keep your core tight and your back completely straight. Every time your body shakes, whisper 'I am weak' before continuing.",
+                setsReps: "4 Sets",
+                time: "2 Minutes per set"
+            },
+            {
+                category: "Humiliation & Worship",
+                title: "The Invisible Altar Bow",
+                instructions: "Choose a focal point in your room representing your Mistress. Drop to your knees, press your forehead completely flat against the floor, and stretch your arms forward in absolute submission.",
+                setsReps: "10 Bows",
+                time: "8 Minutes"
+            },
+            {
+                category: "Household & Servitude",
+                title: "Baseboard Polishing",
+                instructions: "Get down on your stomach. Using a dry paper towel or cloth, polish every single baseboard in your room until they are spotless, moving only by dragging yourself forward.",
+                setsReps: "Entire Room Perimeter",
+                time: "25 Minutes"
+            },
+            {
+                category: "Posture & Balance",
+                title: "Heel Balance Kneel",
+                instructions: "Kneel on the floor, but tuck your toes underneath so your body weight rests entirely on the balls of your feet and toes. Keep your torso upright and hands resting submissively on your thighs.",
+                setsReps: "3 Sets",
+                time: "4 Minutes per set"
+            }
+        ];
+
         function drawTask() {
             if (typeof taskDatabase === 'undefined' || taskDatabase.length === 0) {
                 alert("Tasks database not loaded!");
                 return;
             }
 
-            // Randomly select a task from the massive database
             const randomIndex = Math.floor(Math.random() * taskDatabase.length);
             const task = taskDatabase[randomIndex];
 
-            // Populate modal fields
             document.getElementById('modalCategory').innerText = task.category;
             document.getElementById('modalTitle').innerText = task.title;
             document.getElementById('modalInstructions').innerText = task.instructions;
             document.getElementById('modalStems').innerText = `Requirement: ${task.setsReps}`;
             document.getElementById('modalTime').innerText = `Duration: ${task.time}`;
 
-            // Show modal
             document.getElementById('taskModal').style.display = 'flex';
         }
 
