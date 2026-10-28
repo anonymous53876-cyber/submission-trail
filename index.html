@@ -161,7 +161,7 @@
 
         .btn-close {
             background: transparent;
-            border: 1px solid #44,44,44;
+            border: 1px solid #444;
             color: #aaa;
         }
 
@@ -205,52 +205,21 @@
         </div>
     </div>
 
-    <script>
-        // Sample database structure (To scale to 2000 tasks, this array can be imported from an external JSON file or generated via script)
-        const taskDatabase = [
-            {
-                category: "Household & Servitude",
-                title: "Naked Floor Scrubbing",
-                instructions: "Strip completely naked immediately. Grab a wet cloth and cleaner. You must scrub every inch of the kitchen floor while remaining strictly on your hands and knees (doggy style positioning). If your knees or chest touch the floor improperly, restart the timer.",
-                setsReps: "1 Continuous Session",
-                time: "15 Minutes"
-            },
-            {
-                category: "Physical Endurance & Conditioning",
-                title: "Punishment Uthak Baithak (Deep Squats)",
-                instructions: "Stand in the center of your empty room completely bare. Place your hands behind your head, fingers locked. Perform slow, agonizingly deep uthak baithak (squats). At the bottom of each squat, hold the lowest position for 3 full seconds while reciting aloud: 'I exist only to serve my superiors.'",
-                setsReps: "4 Sets x 20 Reps",
-                time: "10 Minutes"
-            },
-            {
-                category: "Humiliation & Crossdressing",
-                title: "Forced Feminization Wardrobe Trial",
-                    instructions: "Open your wardrobe or drawers. Find the most feminine, revealing, or silky item available (panties, stockings, or a dress). Put it on fully while standing in front of your full-length mirror. Stare directly into your own eyes without looking away, acknowledging your submissive place.",
-                setsReps: "1 Strict Trial",
-                time: "20 Minutes"
-            },
-            {
-                category: "Pet Play & Degradation",
-                title: "Caged Wall Sit of Shame",
-                instructions: "Find a blank wall in your room. Slide down until your thighs are perfectly parallel to the floor (90-degree angle). Raise your hands above your head like paws, keeping your head tilted back against the wall. Whimper softly every 30 seconds to remind yourself of your status.",
-                setsReps: "3 Sets",
-                time: "3 Minutes per set"
-            },
-            {
-                category: "BDSM & Posture Control",
-                title: "The Ultimate Architectural Slouch",
-                instructions: "Kneel on the hard floor facing a corner of your room, nose exactly 6 inches away from the junction of the walls. Place your hands flat behind your lower back, palms facing outward. Maintain absolute stillness. Any twitching or shifting adds 5 minutes to your sentence.",
-                setsReps: "Single Hold",
-                time: "15 Minutes"
-            }
-        ];
+    <!-- Link to the external tasks file -->
+    <script src="tasks.js"></script>
 
+    <script>
         function drawTask() {
-            // Select a random task from the database
+            if (typeof taskDatabase === 'undefined' || taskDatabase.length === 0) {
+                alert("Tasks database not loaded!");
+                return;
+            }
+
+            // Randomly select a task from the massive database
             const randomIndex = Math.floor(Math.random() * taskDatabase.length);
             const task = taskDatabase[randomIndex];
 
-            // Populate the modal fields
+            // Populate modal fields
             document.getElementById('modalCategory').innerText = task.category;
             document.getElementById('modalTitle').innerText = task.title;
             document.getElementById('modalInstructions').innerText = task.instructions;
@@ -265,7 +234,6 @@
             document.getElementById('taskModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside content
         window.onclick = function(event) {
             const modal = document.getElementById('taskModal');
             if (event.target == modal) {
